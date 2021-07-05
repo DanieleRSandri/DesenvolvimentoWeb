@@ -1,7 +1,7 @@
 ﻿<?php
 require_once("../model/FabricaConexao.php");
-require_once("../model/Pessoa.php");
-require_once("../model/PessoaDAO.php");
+require_once("../model/Proprietario.php");
+require_once("../model/ProprietarioDAO.php");
 require_once("../model/Imovel.php");
 require_once("../model/ImovelDAO.php");
 require_once("../include/ImovelValidate.php");
@@ -9,9 +9,9 @@ require_once("../include/ImovelValidate.php");
 class ImovelController {
 
   public function listaPessoasFK($selectedIndex=-1) {
-    $DAO = new PessoaDAO();
+    $DAO = new ProprietarioDAO();
     $lista = array();
-    $lista = $DAO->Consultar();
+    $lista = $DAO->Consultar(1, null);
     $resultOptions = "";
 
     if($selectedIndex != -1)
@@ -51,12 +51,12 @@ class ImovelController {
       $tipoimovel  = $imovel[0]->tipoimovel;
       $descricao  = $imovel[0]->descricao;
       $aluguel  = $imovel[0]->aluguel;
-      $codpessoa = $imovel[0]->codpessoa;
+      $codproprietario = $imovel[0]->codproprietario;
 
       if($modo == 0)
-        chamaFormAlterar($codigo, $situacao, $tipoimovel, $descricao, $aluguel, $codpessoa);
+        chamaFormAlterar($codigo, $situacao, $tipoimovel, $descricao, $aluguel, $codproprietario);
       else
-        chamaFormExcluir($codigo, $situacao, $tipoimovel, $descricao, $aluguel, $codpessoa);
+        chamaFormExcluir($codigo, $situacao, $tipoimovel, $descricao, $aluguel, $codproprietario);
         
   
       print "<script>";
@@ -68,7 +68,7 @@ class ImovelController {
     else
     {
       print "<script>";
-      print "alert('IMÓVEL NÃO ENCONTRADO! Por favor, tente novamente...');";
+      print "alert('Imóvel não encontrado! Por favor, tente novamente...');";
       print "</script>";          
     }
   
@@ -91,7 +91,7 @@ class ImovelController {
         $imovel->tipoimovel  = $tipoimovel;
         $imovel->descricao  = $descricao;
         $imovel->aluguel  = $aluguel;
-        $imovel->codpessoa = $dono;
+        $imovel->codproprietario = $dono;
 
         if(!ImovelValidate::testarSituacao($_POST["situacao"]))
           $erros[] = "Situação inválido";
@@ -103,7 +103,7 @@ class ImovelController {
           $erros[] = "Aluguel inválido";
 
         if($DAO->Inserir($imovel)) {
-          echo "<script>alert(\"IMÓVEL CADASTRADO  COM SUCESSO!\");</script>";
+          echo "<script>alert(\"Imóvel cadastrado com sucesso!\");</script>";
          // header("Location: ../view/insereimovel.php?result=$res");
         }
         else {
@@ -139,7 +139,7 @@ class ImovelController {
         $tipoimovel  = $lista[$i]->tipoimovel;
         $descricao  = $lista[$i]->descricao;
         $aluguel  = $lista[$i]->aluguel;
-        $dono   = $lista[$i]->codpessoa;
+        $dono   = $lista[$i]->codproprietario;
       
         echo "<tr>";
           
@@ -168,7 +168,7 @@ class ImovelController {
 
   public function controlaAlteracao()
   {
-    if(isset($_POST["situacao"]) && isset($_POST["tipoimovel"]) && isset($_POST["dono"])&& isset($_POST["dono"]) && isset($_POST["selCod"])) {
+    if(isset($_POST["situacao"]) && isset($_POST["tipoimovel"]) && isset($_POST["descricao"])&& isset($_POST["aluguel"]) && isset($_POST["dono"])&& isset($_POST["selCod"])) {
       $erros = array();
       $situacao = $_POST["situacao"];
       $tipoimovel = $_POST["tipoimovel"];
@@ -186,11 +186,11 @@ class ImovelController {
         $imovel->tipoimovel  = $tipoimovel;
         $imovel->descricao  = $descricao;
         $imovel->aluguel  = $aluguel;
-        $imovel->codpessoa = $dono;
+        $imovel->codproprietario = $dono;
         $imovel->codigo = $codigo;        
 
         if($DAO->Alterar($imovel)) {
-          echo "<script>alert(\"IMÓVEL ALTERADO COM SUCESSO!\");</script>";
+          echo "<script>alert(\"Imóvel alterado com sucesso!\");</script>";
          // header("Location: ../view/alteraimovel.php?resultMode=$res");
         }
         else
@@ -225,8 +225,8 @@ class ImovelController {
       $imovel->codigo = $codigo;
 
       if($DAO->Excluir($imovel)) {
-        $res = "IMÓVEL EXCLUÍDO COM SUCESSO!";
-        header("Location: ../view/excluiimovel.php?resultMode=$res");
+        echo "<script>alert(\"Imóvel excluido com sucesso!\");</script>";
+      //  header("Location: ../view/excluiimovel.php?resultMode=$res");
       }
       else
       {
