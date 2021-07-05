@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 28-Jun-2021 às 06:29
--- Versão do servidor: 10.4.17-MariaDB
--- versão do PHP: 8.0.2
+-- Tempo de geraÃ§Ã£o: 04-Jul-2021 Ã s 19:09
+-- VersÃ£o do servidor: 10.4.17-MariaDB
+-- versÃ£o do PHP: 8.0.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,8 +18,49 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Banco de dados: `trabalho_web2`
+-- Banco de dados: `trabalho_desenvolvimento_web`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `clientes`
+--
+
+CREATE TABLE `clientes` (
+  `codigo` smallint(6) NOT NULL,
+  `nome` varchar(100) NOT NULL,
+  `cpf` varchar(100) NOT NULL,
+  `fone` varchar(100) NOT NULL,
+  `endereco` varchar(100) NOT NULL,
+  `profissao` varchar(100) NOT NULL,
+  `salario` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `clientes`
+--
+
+INSERT INTO `clientes` (`codigo`, `nome`, `cpf`, `fone`, `endereco`, `profissao`, `salario`) VALUES
+(2, 'Engenharia de Software', '565.767.856-75', '(54) 99901-3670', 'sfwdfawfasf', 'asfasfsafsa', '3.800'),
+(3, 'DANIELE REGINA SANDRI', '031.741.180-26', '(54) 99901-3670', 'Rua Princesa Isabel, 626', 'Programadora', '33.800,00'),
+(6, 'DIENIFFER TROIAN GRITTI', '032.674.850-45', '(54) 99616-9054', 'XV MAIO 74', 'vendedora', '1200'),
+(7, 'leonardo Mathias Lava', '032.674.850-45', '(54) 99616-9054', 'XV MAIO 74', 'programador', '1200');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `contrato`
+--
+
+CREATE TABLE `contrato` (
+  `codigo` smallint(6) NOT NULL,
+  `dataInicial` date NOT NULL,
+  `dataFinal` date NOT NULL,
+  `vlrAluguel` varchar(100) NOT NULL,
+  `codimovel` smallint(6) DEFAULT NULL,
+  `codcliente` smallint(6) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -33,54 +74,50 @@ CREATE TABLE `imovel` (
   `tipoimovel` varchar(255) NOT NULL,
   `descricao` varchar(255) NOT NULL,
   `aluguel` varchar(255) NOT NULL,
-  `codpessoa` smallint(6) DEFAULT NULL
+  `codproprietario` smallint(6) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `imovel`
 --
 
-INSERT INTO `imovel` (`codigo`, `situacao`, `tipoimovel`, `descricao`, `aluguel`, `codpessoa`) VALUES
-(6, 'alugar/vender.', 'sitio', '2.5 hectares', '500,00', 1),
-(7, 'Alugar', 'Apartamento', '2 Quartos, Sala Cozinha e banheiro', '2.000,00', 3),
-(8, 'VENDER', 'RESTAURANTE', 'BEM CONCEITUADO', '1000,000,00', 4),
-(9, 'Vender', 'Ponto Comercial', '200mtrs²', '200,000', 2),
-(10, 'Alugar', 'teste', 'teste', '500,00', 4),
-(11, 'Alugar', 'teste', 'teste', 'teste', 1),
-(12, 'Alugar', 'teste', 'teste', 'teste', 1),
-(13, 'vender', 'teste', 'teste', '111', 1),
-(14, 'vender', 'teste', 'teste', '111', 1),
-(15, 'vender', 'teste', 'teste', '111', 1),
-(16, 'vender', 'teste', 'teste', '111', 1),
-(17, 'vender', 'teste', 'teste', '111', 1),
-(18, 'vender', 'teste', 'teste', '111', 1),
-(19, 'vender', 'Carr', 'teste', '111', 1);
+INSERT INTO `imovel` (`codigo`, `situacao`, `tipoimovel`, `descricao`, `aluguel`, `codproprietario`) VALUES
+(2, 'Alugar', 'aaa', 'Casa 4 quartos, com garagem coberta', '3.800', 7),
+(5, 'A', 'aaaaaaa', 'aaaaaa', '2', 6),
+(6, 'A', 'aaaaaaa', 'sdsdsdsdsd', '51655656', 8),
+(7, 'alugar', 'APARTAMENTO', 'AP 1 QUARTO', '500,00', 5),
+(8, 'teste3', 'teste', 'teste3', '500,00', 10),
+(9, 'alugar', 'APARTAMENTO', 'AP 1 QUARTO', '500,00', 8);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `pessoas`
+-- Estrutura da tabela `proprietario`
 --
 
-CREATE TABLE `pessoas` (
+CREATE TABLE `proprietario` (
   `codigo` smallint(6) NOT NULL,
   `nome` varchar(100) NOT NULL,
   `cpf` varchar(100) NOT NULL,
   `fone` varchar(100) NOT NULL,
-  `endereco` varchar(100) NOT NULL,
-  `profissao` varchar(100) NOT NULL,
-  `salario` varchar(100) NOT NULL
+  `endereco` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Extraindo dados da tabela `pessoas`
+-- Extraindo dados da tabela `proprietario`
 --
 
-INSERT INTO `pessoas` (`codigo`, `nome`, `cpf`, `fone`, `endereco`, `profissao`, `salario`) VALUES
-(1, 'leonardo Mathias Lava', '032.674.850-45', '(54) 99616-9054', 'XV MAIO 74', 'DESEMPREGADO', '1200'),
-(2, 'Dieniffer', '000.000.000-00', '(54) 99616-9054', 'XV MAIO 74', 'vendedora', '1200'),
-(3, 'Daniele ', '033.333.333-33', '(54) 55555-5555', 'passo fundo', 'programadora', '4000'),
-(4, 'DIENIFFER TROIAN GRITTI', '222.222.222-22', '(22) 22222-2222', '15 DE MAIO', 'VENDEDORA', '2000');
+INSERT INTO `proprietario` (`codigo`, `nome`, `cpf`, `fone`, `endereco`) VALUES
+(5, 'Engenharia de Software1', '565.767.856-75', '(54) 99901-3670', 'sfwdfawfasf'),
+(6, 'Teste ', '565.767.856-75', '(54) 99901-3670', 'sfwdfawfasf'),
+(7, 'DANIELE REGINA SANDRI', '031.741.180-26', '(54) 99901-3670', 'Rua Princesa Isabel, 626'),
+(8, 'DANIELE REGINA SANDRI sdsdsds', '031.741.180-26', '(54) 99901-3670', 'Rua Princesa Isabel, 626'),
+(9, 'DANIELE REGINA SANDRI', '031.741.180-26', '(54) 99901-3670', 'Rua Princesa Isabel, 626'),
+(10, 'DANIELE REGINA SANDRI', '031.741.180-26', '(54) 99901-3670', 'Rua Princesa Isabel, 626'),
+(11, 'DANIELE REGINA SANDRI', '031.741.180-26', '(54) 99901-3670', 'Rua Princesa Isabel, 626'),
+(13, 'leonardo Mathias Lava', '032.674.850-45', '(54) 99616-9054', 'XV MAIO 74'),
+(14, 'leonardo Mathias Lava', '032.674.850-45', '(54) 99616-9054', 'XV MAIO 74'),
+(15, 'leonardo Mathias Lava', '032.674.850-45', '(54) 99616-9054', 'XV MAIO 74');
 
 -- --------------------------------------------------------
 
@@ -99,22 +136,36 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`apelido`, `senha`, `email`) VALUES
-('leonardo.lava', 'e10adc3949ba59abbe56e057f20f883e', 'leonardolava111@gmail.com');
+('daniele', 'e10adc3949ba59abbe56e057f20f883e', 'dany.sandry@hotmail.com'),
+('leonardo.lava', '1f007d2c2520e3a7d7a85e15faee2e0e', 'leonardolava111@gmail.com'),
+('leo.lava', 'e10adc3949ba59abbe56e057f20f883e', 'leonardolava111@gmail.com');
 
 --
--- Índices para tabelas despejadas
+-- Ãndices para tabelas despejadas
 --
 
 --
--- Índices para tabela `imovel`
+-- Ãndices para tabela `clientes`
+--
+ALTER TABLE `clientes`
+  ADD PRIMARY KEY (`codigo`);
+
+--
+-- Ãndices para tabela `contrato`
+--
+ALTER TABLE `contrato`
+  ADD PRIMARY KEY (`codigo`);
+
+--
+-- Ãndices para tabela `imovel`
 --
 ALTER TABLE `imovel`
   ADD PRIMARY KEY (`codigo`);
 
 --
--- Índices para tabela `pessoas`
+-- Ãndices para tabela `proprietario`
 --
-ALTER TABLE `pessoas`
+ALTER TABLE `proprietario`
   ADD PRIMARY KEY (`codigo`);
 
 --
@@ -122,16 +173,28 @@ ALTER TABLE `pessoas`
 --
 
 --
+-- AUTO_INCREMENT de tabela `clientes`
+--
+ALTER TABLE `clientes`
+  MODIFY `codigo` smallint(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT de tabela `contrato`
+--
+ALTER TABLE `contrato`
+  MODIFY `codigo` smallint(6) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de tabela `imovel`
 --
 ALTER TABLE `imovel`
-  MODIFY `codigo` smallint(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `codigo` smallint(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT de tabela `pessoas`
+-- AUTO_INCREMENT de tabela `proprietario`
 --
-ALTER TABLE `pessoas`
-  MODIFY `codigo` smallint(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `proprietario`
+  MODIFY `codigo` smallint(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

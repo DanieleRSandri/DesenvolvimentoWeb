@@ -1,12 +1,12 @@
 ﻿<?php
 
-class Imovel {
+class Proprietario {
   private $codigo;
-  private $situacao;
-  private $tipoimovel;
-  private $descricao;
-  private $aluguel;
-  private $codproprietario;
+  private $nome;
+  private $cpf;
+  private $fone;
+  private $endereco;
+
 
   public function __set($propriedade, $valor) {
     $this->$propriedade = $valor;
